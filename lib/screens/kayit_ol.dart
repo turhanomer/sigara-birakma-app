@@ -30,7 +30,8 @@ class _KayitSayfasiState extends State<KayitOlSayfasi> {
     };
 
     try {
-      await veritabani.kullaniciEkle(kullanici);
+      final id = await veritabani.kullaniciEkle(kullanici);
+      if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/giris');
     } catch (e) {
       setState(() {

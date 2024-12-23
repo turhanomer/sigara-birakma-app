@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/giris_sayfasi.dart';
 import 'screens/kayit_ol.dart';
 import 'screens/anasayfa.dart';
+import 'screens/veri_giris_sayfasi.dart';
 
 void main() {
   runApp(MyApp());

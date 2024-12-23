@@ -19,7 +19,12 @@ class _GirisSayfasiState extends State<GirisSayfasi> {
     final kullanici = await veritabani.kullaniciGetir(email, sifre);
 
     if (kullanici != null) {
-      Navigator.pushReplacementNamed(context, '/anasayfa', arguments: kullanici['kullaniciAdi']);
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(
+        context, 
+        '/anasayfa', 
+        arguments: kullanici['id'] as int
+      );
     } else {
       setState(() {
         _hataMesaj = 'E-posta veya şifre hatalı!';
