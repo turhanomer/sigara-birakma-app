@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class Anasayfa extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final username = ModalRoute.of(context)?.settings.arguments as String? ?? 'Misafir';
@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/login');
+                Navigator.pushReplacementNamed(context, '/giris');
               },
               child: Text('Çıkış Yap'),
             ),

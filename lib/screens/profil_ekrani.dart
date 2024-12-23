@@ -1,35 +1,33 @@
 import 'package:flutter/material.dart';
-import '../db_helper.dart';
+import '../veritabani.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfilEkrani extends StatefulWidget {
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  _ProfilEkraniState createState() => _ProfilEkraniState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  final DBHelper dbHelper = DBHelper();
-  String username = '';
+class _ProfilEkraniState extends State<ProfilEkrani> {
+  final Veritabani veritabani = Veritabani();
+  String kullaniciAdi = '';
   String email = '';
 
   @override
   void initState() {
     super.initState();
-    _loadUserInfo();
+    _KullaniciBilgiYukle();
   }
 
-  void _loadUserInfo() async {
-    // Burada, mevcut giriş yapan kullanıcıyı göstereceğiz.
-    // Bu örnekte kullanıcıyı sabit bir e-posta ve şifre ile alıyoruz.
-    final user = await dbHelper.getUser('user@example.com', 'password123');
+  void _KullaniciBilgiYukle() async {
+    final kullanici = await veritabani.kullaniciGetir('user@example.com', 'password123');
 
-    if (user != null) {
+    if (kullanici != null) {
       setState(() {
-        username = user['username'];
-        email = user['email'];
+        kullaniciAdi = kullanici['kullaniciAdi'];
+        email = kullanici['email'];
       });
     } else {
       setState(() {
-        username = 'Kullanıcı bulunamadı';
+        kullaniciAdi = 'Kullanıcı bulunamadı';
         email = 'E-posta bulunamadı';
       });
     }
@@ -43,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Kullanıcı Adı: $username',
+            'Kullanıcı Adı: $kullaniciAdi',
             style: TextStyle(fontSize: 20),
           ),
           SizedBox(height: 10),

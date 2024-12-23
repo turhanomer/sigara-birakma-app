@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
-import 'screens/register_screen.dart';
-import 'screens/home_screen.dart';
+import 'screens/giris_sayfasi.dart';
+import 'screens/kayit_ol.dart';
+import 'screens/anasayfa.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,11 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/giris',
       routes: {
-        '/login': (context) => LoginScreen(),
-        '/register': (context) => RegisterScreen(),
-        '/home': (context) => HomeScreen(),
+        '/giris': (context) => GirisSayfasi(),
+        '/kayit': (context) => KayitOlSayfasi(),
+        '/anasayfa': (context) => Anasayfa(),
       },
     );
   }

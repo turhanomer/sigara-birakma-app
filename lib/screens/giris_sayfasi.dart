@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-import '../db_helper.dart';
+import '../veritabani.dart';
 
-class LoginScreen extends StatefulWidget {
+class GirisSayfasi extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _GirisSayfasiState createState() => _GirisSayfasiState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _GirisSayfasiState extends State<GirisSayfasi> {
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final DBHelper dbHelper = DBHelper();
-  String _errorMessage = '';
+  final _sifreConroller = TextEditingController();
+  final Veritabani veritabani = Veritabani();
+  String _hataMesaj = '';
 
-  void _loginUser() async {
+  void _KullaniciGiris() async {
     final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
+    final sifre = _sifreConroller.text.trim();
 
-    final user = await dbHelper.getUser(email, password);
+    final kullanici = await veritabani.kullaniciGetir(email, sifre);
 
-    if (user != null) {
-      Navigator.pushReplacementNamed(context, '/home', arguments: user['username']);
+    if (kullanici != null) {
+      Navigator.pushReplacementNamed(context, '/anasayfa', arguments: kullanici['kullaniciAdi']);
     } else {
       setState(() {
-        _errorMessage = 'E-posta veya şifre hatalı!';
+        _hataMesaj = 'E-posta veya şifre hatalı!';
       });
     }
   }
@@ -41,24 +41,24 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: InputDecoration(labelText: 'E-posta'),
             ),
             TextField(
-              controller: _passwordController,
+              controller: _sifreConroller,
               decoration: InputDecoration(labelText: 'Şifre'),
               obscureText: true,
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _loginUser,
+              onPressed: _KullaniciGiris,
               child: Text('Giriş Yap'),
             ),
             SizedBox(height: 10),
-            if (_errorMessage.isNotEmpty)
+            if (_hataMesaj.isNotEmpty)
               Text(
-                _errorMessage,
+                _hataMesaj,
                 style: TextStyle(color: Colors.red),
               ),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/register');
+                Navigator.pushNamed(context, '/kayit');
               },
               child: Text('Kayıt Ol'),
             ),
