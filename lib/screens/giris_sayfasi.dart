@@ -38,36 +38,65 @@ class _GirisSayfasiState extends State<GirisSayfasi> {
       appBar: AppBar(title: Text('Giriş Yap')),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'E-posta'),
-            ),
-            TextField(
-              controller: _sifreConroller,
-              decoration: InputDecoration(labelText: 'Şifre'),
-              obscureText: true,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _KullaniciGiris,
-              child: Text('Giriş Yap'),
-            ),
-            SizedBox(height: 10),
-            if (_hataMesaj.isNotEmpty)
-              Text(
-                _hataMesaj,
-                style: TextStyle(color: Colors.red),
+        child: Container(
+          padding: EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                blurRadius: 20,
+                offset: Offset(0, 10),
               ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/kayit');
-              },
-              child: Text('Kayıt Ol'),
-            ),
-          ],
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.smoke_free,
+                size: 64,
+                color: Theme.of(context).primaryColor,
+              ),
+              SizedBox(height: 32),
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  labelText: 'E-posta',
+                  prefixIcon: Icon(Icons.email),
+                ),
+              ),
+              SizedBox(height: 16),
+              TextField(
+                controller: _sifreConroller,
+                decoration: InputDecoration(
+                  labelText: 'Şifre',
+                  prefixIcon: Icon(Icons.lock),
+                ),
+                obscureText: true,
+              ),
+              SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _KullaniciGiris,
+                child: Text('Giriş Yap'),
+              ),
+              if (_hataMesaj.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(top: 16),
+                  child: Text(
+                    _hataMesaj,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/kayit');
+                },
+                child: Text('Hesabınız yok mu? Kayıt olun'),
+              ),
+            ],
+          ),
         ),
       ),
     );

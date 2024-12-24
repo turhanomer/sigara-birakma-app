@@ -142,13 +142,42 @@ class _AnasayfaState extends State<Anasayfa> {
               deger: '${_kazanilanZaman.inHours} saat ${_kazanilanZaman.inMinutes % 60} dakika',
             ),
             SizedBox(height: 24),
-            Text(
-              'Her geçen gün daha sağlıklısınız!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.green,
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.green.shade100, Colors.teal.shade50],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.green.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.favorite,
+                    color: Colors.green,
+                    size: 32,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Her geçen gün daha sağlıklısınız!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green[700],
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
