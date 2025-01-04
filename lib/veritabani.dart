@@ -13,15 +13,17 @@ class Veritabani {
 
   Future<Database> veritabaniBaslat() async {
     String yol = join(await getDatabasesPath(), 'uygulama.db');
+
     return openDatabase(
-      yol, 
+      yol,
       onCreate: (vt, surum) async {
         await vt.execute('''
           CREATE TABLE kullanicilar(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             kullaniciAdi TEXT,
             email TEXT UNIQUE,
-            sifre TEXT
+            sifre TEXT,
+            avatarIndex INTEGER DEFAULT 0
           )
         ''');
         await vt.execute('''
@@ -36,7 +38,7 @@ class Veritabani {
           )
         ''');
       },
-      version: 2,
+      version: 4,
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
           await db.execute('''
@@ -48,6 +50,19 @@ class Veritabani {
               paket_fiyati REAL,
               paket_sigara_sayisi INTEGER,
               FOREIGN KEY (kullanici_id) REFERENCES kullanicilar (id)
+            )
+          ''');
+        }
+        if (oldVersion < 4) {
+          // Kullanıcılar tablosunu yeniden oluştur
+          await db.execute('DROP TABLE IF EXISTS kullanicilar');
+          await db.execute('''
+            CREATE TABLE kullanicilar(
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              kullaniciAdi TEXT,
+              email TEXT UNIQUE,
+              sifre TEXT,
+              avatarIndex INTEGER DEFAULT 0
             )
           ''');
         }
@@ -66,20 +81,51 @@ class Veritabani {
     await vt.delete('kullanicilar');
   }
 
-  Future<Map<String, dynamic>?> kullaniciGetir(String email, String sifre) async {
-    final vt = await veritabani;
-    List<Map<String, dynamic>> sonuc = await vt.query(
+  Future<Map<String, dynamic>?> kullaniciGetir(
+      String email, String sifre) async {
+    final db = await veritabani;
+    final List<Map<String, dynamic>> kullanicilar = await db.query(
       'kullanicilar',
       where: 'email = ? AND sifre = ?',
       whereArgs: [email, sifre],
     );
-    return sonuc.isNotEmpty ? sonuc.first : null;
+
+    if (kullanicilar.isEmpty) {
+      return null;
+    }
+
+    return kullanicilar.first;
+  }
+
+  Future<Map<String, dynamic>?> kullaniciGetirById(int id) async {
+    final db = await veritabani;
+    final List<Map<String, dynamic>> kullanicilar = await db.query(
+      'kullanicilar',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (kullanicilar.isEmpty) {
+      return null;
+    }
+
+    return kullanicilar.first;
   }
 
   Future<void> kullaniciVerileriKaydet(KullaniciVerileri veriler) async {
     final vt = await veritabani;
     await vt.insert('kullanici_verileri', veriler.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<void> kullaniciVerileriniSifirla(int kullaniciId) async {
+    final db = await veritabani;
+    // Önce mevcut kullanıcı verilerini sil
+    await db.delete(
+      'kullanici_verileri',
+      where: 'kullanici_id = ?',
+      whereArgs: [kullaniciId],
+    );
   }
 
   Future<KullaniciVerileri?> kullaniciVerileriGetir(int kullaniciId) async {
@@ -92,5 +138,22 @@ class Veritabani {
 
     if (maps.isEmpty) return null;
     return KullaniciVerileri.fromMap(maps.first);
+  }
+
+  Future<void> kullaniciGuncelle(
+    int kullaniciId,
+    String yeniKullaniciAdi,
+    int? avatarIndex,
+  ) async {
+    final db = await veritabani;
+    await db.update(
+      'kullanicilar',
+      {
+        'kullaniciAdi': yeniKullaniciAdi,
+        'avatarIndex': avatarIndex,
+      },
+      where: 'id = ?',
+      whereArgs: [kullaniciId],
+    );
   }
 }

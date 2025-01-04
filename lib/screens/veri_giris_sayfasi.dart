@@ -5,7 +5,7 @@ import '../veritabani.dart';
 class VeriGirisSayfasi extends StatefulWidget {
   final int kullaniciId;
 
-  const VeriGirisSayfasi({Key? key, required this.kullaniciId}) : super(key: key);
+  const VeriGirisSayfasi({super.key, required this.kullaniciId});
 
   @override
   _VeriGirisSayfasiState createState() => _VeriGirisSayfasiState();
@@ -17,23 +17,47 @@ class _VeriGirisSayfasiState extends State<VeriGirisSayfasi> {
   final _paketFiyatiController = TextEditingController();
   final _paketSigaraSayisiController = TextEditingController();
   final _veritabani = Veritabani();
+  DateTime? _secilenTarih;
+
+  Future<void> _tarihSec() async {
+    final DateTime? secilen = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Color(0xFF6A88E5),
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: Colors.black87,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Color(0xFF6A88E5),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (secilen != null) {
+      setState(() {
+        _secilenTarih = secilen;
+        _birakisTarihiController.text = secilen.toString().split(' ')[0];
+      });
+    }
+  }
 
   void _verileriKaydet() async {
-    if (_birakisTarihiController.text.isEmpty ||
-        _gunlukSigaraController.text.isEmpty ||
-        _paketFiyatiController.text.isEmpty ||
-        _paketSigaraSayisiController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Lütfen tüm alanları doldurun')),
-      );
-      return;
-    }
-
     try {
-      final tarih = DateTime.tryParse(_birakisTarihiController.text);
-      if (tarih == null) {
+      if (_secilenTarih == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Geçerli bir tarih giriniz (YYYY-MM-DD)')),
+          SnackBar(content: Text('Lütfen bir tarih seçin')),
         );
         return;
       }
@@ -46,7 +70,8 @@ class _VeriGirisSayfasiState extends State<VeriGirisSayfasi> {
         return;
       }
 
-      final paketFiyati = double.tryParse(_paketFiyatiController.text.replaceAll(',', '.'));
+      final paketFiyati =
+          double.tryParse(_paketFiyatiController.text.replaceAll(',', '.'));
       if (paketFiyati == null || paketFiyati <= 0) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Geçerli bir paket fiyatı giriniz')),
@@ -64,74 +89,245 @@ class _VeriGirisSayfasiState extends State<VeriGirisSayfasi> {
 
       final veriler = KullaniciVerileri(
         kullaniciId: widget.kullaniciId,
-        birakisTarihi: tarih,
+        birakisTarihi: _secilenTarih!,
         gunlukIcilenSigara: gunlukSigara,
         paketFiyati: paketFiyati,
         paketSigaraSayisi: paketSigara,
       );
 
       await _veritabani.kullaniciVerileriKaydet(veriler);
-      
+
       if (!mounted) return;
-      Navigator.pushReplacementNamed(
-        context,
+
+      // Başarılı kayıt mesajı göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Bilgileriniz başarıyla kaydedildi'),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      // Ana sayfaya yönlendir
+      Navigator.of(context).pushNamedAndRemoveUntil(
         '/anasayfa',
+        (route) => false,
         arguments: widget.kullaniciId,
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Beklenmeyen bir hata oluştu')),
+        SnackBar(
+          content: Text('Beklenmeyen bir hata oluştu'),
+          backgroundColor: Colors.red,
+        ),
       );
     }
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required IconData icon,
+    bool readOnly = false,
+    VoidCallback? onTap,
+    TextInputType? keyboardType,
+  }) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            spreadRadius: 1,
+            blurRadius: 10,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: TextField(
+        controller: controller,
+        readOnly: readOnly,
+        onTap: onTap,
+        keyboardType: keyboardType,
+        style: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 16,
+        ),
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: TextStyle(
+            fontFamily: 'Poppins',
+            color: Colors.grey[600],
+            fontSize: 16,
+          ),
+          prefixIcon: Icon(
+            icon,
+            color: Color(0xFF6A88E5),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(
+              color: Colors.grey.withOpacity(0.2),
+              width: 1,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(
+              color: Color(0xFF6A88E5),
+              width: 2,
+            ),
+          ),
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sigara Bırakma Bilgileri')),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Text(
+          'Sigara Bırakma Planı',
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: Colors.black87,
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              controller: _birakisTarihiController,
-              decoration: InputDecoration(
-                labelText: 'Bırakış Tarihi (YYYY-MM-DD)',
-                hintText: '2024-03-21',
+            Padding(
+              padding: EdgeInsets.all(24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF6A88E5),
+                          Color(0xFF4B66C7),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xFF6A88E5).withOpacity(0.3),
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.smoke_free,
+                          color: Colors.white,
+                          size: 32,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'Sigara Bırakma Yolculuğunuz\nBaşlıyor!',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 32),
+                  _buildTextField(
+                    controller: _birakisTarihiController,
+                    label: 'Bırakış Tarihi',
+                    icon: Icons.calendar_today,
+                    readOnly: true,
+                    onTap: _tarihSec,
+                  ),
+                  _buildTextField(
+                    controller: _gunlukSigaraController,
+                    label: 'Günlük İçilen Sigara Sayısı',
+                    icon: Icons.smoking_rooms,
+                    keyboardType: TextInputType.number,
+                  ),
+                  _buildTextField(
+                    controller: _paketFiyatiController,
+                    label: 'Paket Fiyatı (TL)',
+                    icon: Icons.attach_money,
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                  ),
+                  _buildTextField(
+                    controller: _paketSigaraSayisiController,
+                    label: 'Paketteki Sigara Sayısı',
+                    icon: Icons.inventory_2,
+                    keyboardType: TextInputType.number,
+                  ),
+                  SizedBox(height: 24),
+                  Container(
+                    height: 55,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFF6A88E5),
+                            Color(0xFF4B66C7),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xFF6A88E5).withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 8,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton(
+                        onPressed: _verileriKaydet,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          padding: EdgeInsets.zero,
+                        ),
+                        child: Text(
+                          'Başla',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              controller: _gunlukSigaraController,
-              decoration: InputDecoration(
-                labelText: 'Günlük İçilen Sigara Sayısı',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 16),
-            TextField(
-              controller: _paketFiyatiController,
-              decoration: InputDecoration(
-                labelText: 'Paket Fiyatı (TL)',
-              ),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              controller: _paketSigaraSayisiController,
-              decoration: InputDecoration(
-                labelText: 'Paketteki Sigara Sayısı',
-              ),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: _verileriKaydet,
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16),
-              ),
-              child: Text('Kaydet ve Devam Et'),
             ),
           ],
         ),
@@ -147,4 +343,4 @@ class _VeriGirisSayfasiState extends State<VeriGirisSayfasi> {
     _paketSigaraSayisiController.dispose();
     super.dispose();
   }
-} 
+}
