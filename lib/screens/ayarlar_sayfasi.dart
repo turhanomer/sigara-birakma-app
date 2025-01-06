@@ -388,7 +388,7 @@ class _AyarlarSayfasiState extends State<AyarlarSayfasi> {
                 _buildTextField(
                   controller: _paketFiyatiController,
                   label: 'Paket Fiyatı (TL)',
-                  icon: Icons.attach_money,
+                  icon: Icons.currency_lira,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                 ),
                 _buildTextField(

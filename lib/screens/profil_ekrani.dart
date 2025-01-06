@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../veritabani.dart';
 import 'profil_duzenle.dart';
 import 'hakkinda_sayfasi.dart';
+import 'bildirim_ayarlari.dart';
+import 'dil_secenekleri.dart';
+import 'yardim_ve_destek.dart';
 
 class ProfilEkrani extends StatefulWidget {
   final int kullaniciId;
@@ -128,21 +131,38 @@ class _ProfilEkraniState extends State<ProfilEkrani> {
                       color: Colors.black87,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BildirimAyarlari(
+                          kullaniciId: widget.kullaniciId,
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 Divider(height: 1),
                 ListTile(
-                  leading: Icon(Icons.privacy_tip_outlined,
-                      color: Color(0xFF6A88E5)),
+                  leading: Icon(Icons.language, color: Color(0xFF6A88E5)),
                   title: Text(
-                    'Gizlilik Politikası',
+                    'Dil Seçenekleri',
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       fontSize: 16,
                       color: Colors.black87,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DilSecenekleri(
+                          kullaniciId: widget.kullaniciId,
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 Divider(height: 1),
                 ListTile(
@@ -155,7 +175,14 @@ class _ProfilEkraniState extends State<ProfilEkrani> {
                       color: Colors.black87,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => YardimVeDestek(),
+                      ),
+                    );
+                  },
                 ),
                 Divider(height: 1),
                 ListTile(

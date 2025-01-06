@@ -6,6 +6,7 @@ import '../veritabani.dart';
 import 'ayarlar_sayfasi.dart';
 import 'veri_giris_sayfasi.dart';
 import 'profil_ekrani.dart';
+import 'basarimlar_sayfasi.dart';
 
 class Anasayfa extends StatefulWidget {
   const Anasayfa({super.key});
@@ -21,7 +22,6 @@ class _AnasayfaState extends State<Anasayfa> {
   int? _kullaniciId;
   int _selectedIndex = 0;
 
-  // İstatistikler
   Duration _gecenSure = Duration.zero;
   double _birikilenPara = 0;
   int _icilemeyenSigara = 0;
@@ -78,7 +78,7 @@ class _AnasayfaState extends State<Anasayfa> {
     _birikilenPara = (gunlukMaliyet * _gecenSure.inDays);
 
     _icilemeyenSigara =
-        (_gecenSure.inHours * _kullaniciVerileri!.gunlukIcilenSigara ~/ 24);
+        (_gecenSure.inDays * _kullaniciVerileri!.gunlukIcilenSigara).floor();
 
     _kazanilanZaman = Duration(minutes: _icilemeyenSigara * 5);
   }
@@ -112,7 +112,7 @@ class _AnasayfaState extends State<Anasayfa> {
           IstatistikKarti(
             baslik: 'Biriken Para',
             deger: '${_birikilenPara.toStringAsFixed(2)} TL',
-            icon: Icons.savings_outlined,
+            icon: Icons.currency_lira,
           ),
           IstatistikKarti(
             baslik: 'İçilmeyen Sigara',
@@ -187,11 +187,17 @@ class _AnasayfaState extends State<Anasayfa> {
 
     final List<Widget> _sayfalar = [
       _buildIstatistiklerSayfasi(),
+      BasarimlarSayfasi(kullaniciId: _kullaniciId!),
       AyarlarSayfasi(kullaniciVerileri: _kullaniciVerileri!),
       ProfilEkrani(kullaniciId: _kullaniciId!),
     ];
 
-    final List<String> _basliklar = ['İstatistikler', 'Ayarlar', 'Hesabım'];
+    final List<String> _basliklar = [
+      'İstatistikler',
+      'Başarımlar',
+      'Ayarlar',
+      'Hesabım'
+    ];
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -210,68 +216,30 @@ class _AnasayfaState extends State<Anasayfa> {
         centerTitle: true,
       ),
       body: _sayfalar[_selectedIndex],
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 20,
-              offset: Offset(0, -5),
-            ),
-          ],
-        ),
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 12),
-          child: BottomNavigationBar(
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: EdgeInsets.only(bottom: 6),
-                  child: Icon(Icons.bar_chart, size: 32),
-                ),
-                label: 'İstatistikler',
-              ),
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: EdgeInsets.only(bottom: 6),
-                  child: Icon(Icons.settings, size: 32),
-                ),
-                label: 'Ayarlar',
-              ),
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: EdgeInsets.only(bottom: 6),
-                  child: Icon(Icons.person, size: 32),
-                ),
-                label: 'Hesabım',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: Color(0xFF6A88E5),
-            unselectedItemColor: Colors.grey,
-            selectedLabelStyle: TextStyle(
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
-              height: 1.8,
-            ),
-            unselectedLabelStyle: TextStyle(
-              fontFamily: 'Poppins',
-              fontSize: 15,
-              height: 1.8,
-            ),
-            onTap: _onItemTapped,
-            elevation: 0,
-            backgroundColor: Colors.white,
-            type: BottomNavigationBarType.fixed,
-            selectedIconTheme: IconThemeData(size: 32),
-            unselectedIconTheme: IconThemeData(size: 32),
-            showUnselectedLabels: true,
-            showSelectedLabels: true,
-            iconSize: 32,
-            landscapeLayout: BottomNavigationBarLandscapeLayout.centered,
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart),
+            label: 'İstatistikler',
           ),
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.emoji_events),
+            label: 'Başarımlar',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Ayarlar',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Hesabım',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Color(0xFF6A88E5),
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.fixed,
+        onTap: _onItemTapped,
       ),
     );
   }

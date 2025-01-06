@@ -272,7 +272,7 @@ class _VeriGirisSayfasiState extends State<VeriGirisSayfasi> {
                   _buildTextField(
                     controller: _paketFiyatiController,
                     label: 'Paket Fiyatı (TL)',
-                    icon: Icons.attach_money,
+                    icon: Icons.currency_lira,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                   ),
