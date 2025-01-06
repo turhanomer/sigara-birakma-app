@@ -54,7 +54,6 @@ class Veritabani {
           ''');
         }
         if (oldVersion < 4) {
-          // Kullanıcılar tablosunu yeniden oluştur
           await db.execute('DROP TABLE IF EXISTS kullanicilar');
           await db.execute('''
             CREATE TABLE kullanicilar(
@@ -120,7 +119,6 @@ class Veritabani {
 
   Future<void> kullaniciVerileriniSifirla(int kullaniciId) async {
     final db = await veritabani;
-    // Önce mevcut kullanıcı verilerini sil
     await db.delete(
       'kullanici_verileri',
       where: 'kullanici_id = ?',

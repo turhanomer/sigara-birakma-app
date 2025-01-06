@@ -12,7 +12,7 @@ class DilSecenekleri extends StatefulWidget {
 
 class _DilSecenekleriState extends State<DilSecenekleri> {
   final Veritabani _veritabani = Veritabani();
-  String _secilenDil = 'tr'; // Varsayılan olarak Türkçe
+  String _secilenDil = 'tr';
 
   @override
   void initState() {
@@ -21,15 +21,12 @@ class _DilSecenekleriState extends State<DilSecenekleri> {
   }
 
   Future<void> _dilAyariniYukle() async {
-    // TODO: Veritabanından dil ayarını yükle
   }
 
   Future<void> _dilAyariniKaydet(String dilKodu) async {
     setState(() {
       _secilenDil = dilKodu;
     });
-
-    // TODO: Veritabanına dil ayarını kaydet
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

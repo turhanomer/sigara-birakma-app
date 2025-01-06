@@ -54,14 +54,12 @@ class _BasarimlarSayfasiState extends State<BasarimlarSayfasi> {
 
   @override
   Widget build(BuildContext context) {
-    // Başarımlar listesi
     final List<Map<String, dynamic>> basarimlar = [
-      // Kararlı Kategorisi
       {
         'icon': Icons.emoji_events,
         'title': 'Kararlı (1/4)',
         'description': 'Tebrikler, sigarayı bırakma kararı aldın.',
-        'unlocked': true, // Her zaman açık
+        'unlocked': true,
         'category': 'Kararlı'
       },
       {
@@ -85,7 +83,6 @@ class _BasarimlarSayfasiState extends State<BasarimlarSayfasi> {
         'unlocked': _gecenSure.inDays >= 30,
         'category': 'Kararlı'
       },
-      // Sigaraya Hayır Kategorisi
       {
         'icon': Icons.smoke_free,
         'title': 'Sigaraya Hayır (1/3)',
@@ -107,7 +104,6 @@ class _BasarimlarSayfasiState extends State<BasarimlarSayfasi> {
         'unlocked': _icilemeyenSigara >= 1000,
         'category': 'Sigaraya Hayır'
       },
-      // Tasarruflu Kategorisi
       {
         'icon': Icons.currency_lira,
         'title': 'Tasarruflu (1/3)',
@@ -131,7 +127,6 @@ class _BasarimlarSayfasiState extends State<BasarimlarSayfasi> {
       },
     ];
 
-    // Başarımları kategorilere göre grupla
     final Map<String, List<Map<String, dynamic>>> groupedBasarimlar = {};
     for (var basarim in basarimlar) {
       final category = basarim['category'] as String;

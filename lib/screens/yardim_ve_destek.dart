@@ -187,7 +187,6 @@ class YardimVeDestek extends StatelessWidget {
                 aciklama: 'Sorularınız için bize e-posta gönderin',
                 icon: Icons.email_outlined,
                 onTap: () {
-                  // TODO: E-posta gönderme işlemi
                 },
               ),
               _buildIletisimButonu(
@@ -195,7 +194,6 @@ class YardimVeDestek extends StatelessWidget {
                 aciklama: 'Uzmanlarımızla görüşün',
                 icon: Icons.phone_outlined,
                 onTap: () {
-                  // TODO: Telefon açma işlemi
                 },
               ),
             ],
