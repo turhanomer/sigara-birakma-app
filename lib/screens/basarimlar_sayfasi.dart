@@ -56,72 +56,114 @@ class _BasarimlarSayfasiState extends State<BasarimlarSayfasi> {
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> basarimlar = [
       {
-        'icon': Icons.emoji_events,
-        'title': 'Kararlı (1/4)',
+        'icon': Icons.timer,
+        'title': 'Kararlı (1/6)',
         'description': 'Tebrikler, sigarayı bırakma kararı aldın.',
         'unlocked': true,
         'category': 'Kararlı'
       },
       {
-        'icon': Icons.emoji_events,
-        'title': 'Kararlı (2/4)',
+        'icon': Icons.timer,
+        'title': 'Kararlı (2/6)',
         'description': '1 Gündür sigara içmedin',
         'unlocked': _gecenSure.inDays >= 1,
         'category': 'Kararlı'
       },
       {
-        'icon': Icons.emoji_events,
-        'title': 'Kararlı (3/4)',
+        'icon': Icons.timer,
+        'title': 'Kararlı (3/6)',
         'description': '1 Haftadır sigara içmedin',
         'unlocked': _gecenSure.inDays >= 7,
         'category': 'Kararlı'
       },
       {
-        'icon': Icons.emoji_events,
-        'title': 'Kararlı (4/4)',
+        'icon': Icons.timer,
+        'title': 'Kararlı (4/6)',
         'description': '1 Aydır sigara içmedin',
         'unlocked': _gecenSure.inDays >= 30,
         'category': 'Kararlı'
       },
       {
+        'icon': Icons.timer,
+        'title': 'Kararlı (5/6)',
+        'description': '6 Aydır sigara içmedin',
+        'unlocked': _gecenSure.inDays >= 180,
+        'category': 'Kararlı'
+      },
+      {
+        'icon': Icons.timer,
+        'title': 'Kararlı (6/6)',
+        'description': '1 Yıldır sigara içmedin',
+        'unlocked': _gecenSure.inDays >= 365,
+        'category': 'Kararlı'
+      },
+      {
         'icon': Icons.smoke_free,
-        'title': 'Sigaraya Hayır (1/3)',
+        'title': 'Sigaraya Hayır (1/5)',
         'description': '100 adet sigara içmedin',
         'unlocked': _icilemeyenSigara >= 100,
         'category': 'Sigaraya Hayır'
       },
       {
         'icon': Icons.smoke_free,
-        'title': 'Sigaraya Hayır (2/3)',
+        'title': 'Sigaraya Hayır (2/5)',
         'description': '500 adet sigara içmedin',
         'unlocked': _icilemeyenSigara >= 500,
         'category': 'Sigaraya Hayır'
       },
       {
         'icon': Icons.smoke_free,
-        'title': 'Sigaraya Hayır (3/3)',
+        'title': 'Sigaraya Hayır (3/5)',
         'description': '1000 adet sigara içmedin',
         'unlocked': _icilemeyenSigara >= 1000,
         'category': 'Sigaraya Hayır'
       },
       {
+        'icon': Icons.smoke_free,
+        'title': 'Sigaraya Hayır (4/5)',
+        'description': '1500 adet sigara içmedin',
+        'unlocked': _icilemeyenSigara >= 1500,
+        'category': 'Sigaraya Hayır'
+      },
+      {
+        'icon': Icons.smoke_free,
+        'title': 'Sigaraya Hayır (5/5)',
+        'description': '2000 adet sigara içmedin',
+        'unlocked': _icilemeyenSigara >= 2000,
+        'category': 'Sigaraya Hayır'
+      },
+      {
         'icon': Icons.currency_lira,
-        'title': 'Tasarruflu (1/3)',
-        'description': 'Sigara içmeyerek 100 TL kurtardın',
+        'title': 'Tasarruflu (1/5)',
+        'description': '100 TL kurtardın',
         'unlocked': _birikilenPara >= 100,
         'category': 'Tasarruflu'
       },
       {
         'icon': Icons.currency_lira,
-        'title': 'Tasarruflu (2/3)',
-        'description': 'Sigara içmeyerek 1000 TL kurtardın',
+        'title': 'Tasarruflu (2/5)',
+        'description': '500 TL kurtardın',
+        'unlocked': _birikilenPara >= 500,
+        'category': 'Tasarruflu'
+      },
+      {
+        'icon': Icons.currency_lira,
+        'title': 'Tasarruflu (3/5)',
+        'description': '1000 TL kurtardın',
         'unlocked': _birikilenPara >= 1000,
         'category': 'Tasarruflu'
       },
       {
         'icon': Icons.currency_lira,
-        'title': 'Tasarruflu (3/3)',
-        'description': 'Sigara içmeyerek 10000 TL kurtardın',
+        'title': 'Tasarruflu (4/5)',
+        'description': '5000 TL kurtardın',
+        'unlocked': _birikilenPara >= 5000,
+        'category': 'Tasarruflu'
+      },
+      {
+        'icon': Icons.currency_lira,
+        'title': 'Tasarruflu (5/5)',
+        'description': '10000 TL kurtardın',
         'unlocked': _birikilenPara >= 10000,
         'category': 'Tasarruflu'
       },

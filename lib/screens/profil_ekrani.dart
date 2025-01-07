@@ -5,6 +5,7 @@ import 'hakkinda_sayfasi.dart';
 import 'bildirim_ayarlari.dart';
 import 'dil_secenekleri.dart';
 import 'yardim_ve_destek.dart';
+import 'gizlilik_politikasi.dart';
 
 class ProfilEkrani extends StatefulWidget {
   final int kullaniciId;
@@ -200,6 +201,27 @@ class _ProfilEkraniState extends State<ProfilEkrani> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => HakkindaSayfasi(),
+                      ),
+                    );
+                  },
+                ),
+                Divider(height: 1),
+                ListTile(
+                  leading: Icon(Icons.privacy_tip_outlined,
+                      color: Color(0xFF6A88E5)),
+                  title: Text(
+                    'Gizlilik Politikası',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 16,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => GizlilikPolitikasiSayfasi(),
                       ),
                     );
                   },

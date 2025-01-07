@@ -26,7 +26,7 @@ class _AyarlarSayfasiState extends State<AyarlarSayfasi> {
     super.initState();
     _secilenTarih = widget.kullaniciVerileri.birakisTarihi;
     _birakisTarihiController.text =
-        widget.kullaniciVerileri.birakisTarihi.toString().split(' ')[0];
+        "${_secilenTarih!.day.toString().padLeft(2, '0')}/${_secilenTarih!.month.toString().padLeft(2, '0')}/${_secilenTarih!.year}";
     _gunlukSigaraController.text =
         widget.kullaniciVerileri.gunlukIcilenSigara.toString();
     _paketFiyatiController.text =
@@ -96,7 +96,7 @@ class _AyarlarSayfasiState extends State<AyarlarSayfasi> {
       setState(() {
         _secilenTarih = secilen;
         _birakisTarihiController.text =
-            "${secilen.day.toString().padLeft(2, '0')}.${secilen.month.toString().padLeft(2, '0')}.${secilen.year}";
+            "${secilen.day.toString().padLeft(2, '0')}/${secilen.month.toString().padLeft(2, '0')}/${secilen.year}";
       });
     }
   }
@@ -148,7 +148,6 @@ class _AyarlarSayfasiState extends State<AyarlarSayfasi> {
 
       if (!mounted) return;
 
-      // Başarılı kayıt mesajı göster
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Ayarlar başarıyla kaydedildi'),
@@ -156,7 +155,6 @@ class _AyarlarSayfasiState extends State<AyarlarSayfasi> {
         ),
       );
 
-      // Ana sayfayı yeniden yükle
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/anasayfa',
         (route) => false,
@@ -174,11 +172,9 @@ class _AyarlarSayfasiState extends State<AyarlarSayfasi> {
 
   Future<void> _istatistikleriSifirla() async {
     try {
-      // Önce mevcut verileri sil
       await _veritabani
           .kullaniciVerileriniSifirla(widget.kullaniciVerileri.kullaniciId);
 
-      // Yeni veriler oluştur (sadece temel bilgilerle)
       final yeniVeriler = KullaniciVerileri(
         kullaniciId: widget.kullaniciVerileri.kullaniciId,
         birakisTarihi: DateTime.now(),
@@ -187,7 +183,6 @@ class _AyarlarSayfasiState extends State<AyarlarSayfasi> {
         paketSigaraSayisi: widget.kullaniciVerileri.paketSigaraSayisi,
       );
 
-      // Yeni verileri kaydet
       await _veritabani.kullaniciVerileriKaydet(yeniVeriler);
 
       if (!mounted) return;
@@ -199,7 +194,6 @@ class _AyarlarSayfasiState extends State<AyarlarSayfasi> {
         ),
       );
 
-      // Ana sayfaya yönlendir
       Navigator.of(context).pushNamedAndRemoveUntil(
         '/anasayfa',
         (route) => false,
