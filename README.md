@@ -1,16 +1,34 @@
-# sigara_birakma
+# **Sigara Bırakma Uygulaması**  
+*Bu uygulama, kullanıcıların sigara bırakma süreçlerini takip etmelerine, yaptıkları tasarrufları görmelerine ve yeni başarımlar kazanarak motive olmalarına yardımcı olmak amacıyla geliştirilmiştir. Mobil Programlama Dönem Sonu Projesi olarak tasarlanan uygulama, kullanıcıların sigara bırakma tarihlerini kaydetmelerine, ilerlemelerini izlemelerine ve gerektiğinde sıfırdan başlayarak süreci yeniden başlatmalarına olanak tanır.*
 
-A new Flutter project.
+## *Özellikler Listesi*  
+- Kullanıcı kimlik doğrulaması (Kaydol, Giriş Yap)  
+- Yeni kazanılan başarımlar 
+- Veri depolama ve senkronizasyon
+- İstatistiksel veriler      
 
-## Getting Started
+## *Kullanılan Teknolojiler*  
+- Flutter(Dart)
+- Database(Veritabanı): Sqlite
+- Packages(Paketler): Sqflite, path_provider
 
-This project is a starting point for a Flutter application.
+## *Installation*  
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Clone the repository:  
+```bash
+git clone https://github.com/username/project-name.git  
+```
+Switch main Branch:
+```bash
+git switch main
+```
+Packages:
+```bash
+$ flutter pub get
+$ flutter pub add sqflite
+$ flutter pub add path_provider
+```
+Running The App:
+```bash
+$ flutter run
+```
