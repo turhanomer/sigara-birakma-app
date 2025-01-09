@@ -12,11 +12,11 @@
 - Database(Veritabanı): Sqlite
 - Packages(Paketler): Sqflite, path_provider
 
-## *Installation*  
+## *Installation - Kurulum*  
 
-Clone the repository:  
+Clone The Repository:  
 ```bash
-git clone https://github.com/username/project-name.git  
+git clone https://github.com/turhanomer/sigara-birakma-mobil.git  
 ```
 Switch main Branch:
 ```bash
