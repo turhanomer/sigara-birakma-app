@@ -16,7 +16,7 @@
 
 Clone the repository:  
 ```bash
-git clone https://github.com/username/project-name.git  
+git clone https://github.com/turhanomer/sigara-birakma-mobil.git 
 ```
 Switch main Branch:
 ```bash
