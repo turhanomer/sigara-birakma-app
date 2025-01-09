@@ -1,3 +1,8 @@
+# Mobil Team #
+- Ömer Turhan - 132230007
+- Emir Demirci - 1322300022
+- Kadir Doğru - 1322300024
+
 # **Sigara Bırakma Uygulaması**  
 *Bu uygulama, kullanıcıların sigara bırakma süreçlerini takip etmelerine, yaptıkları tasarrufları görmelerine ve yeni başarımlar kazanarak motive olmalarına yardımcı olmak amacıyla geliştirilmiştir. Mobil Programlama Dönem Sonu Projesi olarak tasarlanan uygulama, kullanıcıların sigara bırakma tarihlerini kaydetmelerine, ilerlemelerini izlemelerine ve gerektiğinde sıfırdan başlayarak süreci yeniden başlatmalarına olanak tanır.*
 
@@ -18,9 +23,9 @@ Clone The Repository:
 ```bash
 git clone https://github.com/turhanomer/sigara-birakma-mobil.git  
 ```
-Switch main Branch:
+Switch master Branch:
 ```bash
-git switch main
+git switch master
 ```
 Packages:
 ```bash
