@@ -6,6 +6,14 @@
 # **Sigara Bırakma Uygulaması**  
 *Bu uygulama, kullanıcıların sigara bırakma süreçlerini takip etmelerine, yaptıkları tasarrufları görmelerine ve yeni başarımlar kazanarak motive olmalarına yardımcı olmak amacıyla geliştirilmiştir. Mobil Programlama Dönem Sonu Projesi olarak tasarlanan uygulama, kullanıcıların sigara bırakma tarihlerini kaydetmelerine, ilerlemelerini izlemelerine ve gerektiğinde sıfırdan başlayarak süreci yeniden başlatmalarına olanak tanır. Şu an için uygulama demo aşamasındadır ve geliştirme süreci devam etmektedir.*
 
+### Mobil Programlama Videosu
+
+Aşağıdaki linke tıklayarak proje videosunu izleyebilirsiniz: 
+
+⬇️⬇️⬇️  
+
+[https://www.youtube.com/watch?v=pwRpZyMdTxc](https://www.youtube.com/watch?v=pwRpZyMdTxc)
+
 ## *Özellikler Listesi*  
 - Kullanıcı kimlik doğrulaması (Kaydol, Giriş Yap)  
 - Yeni kazanılan başarımlar 
